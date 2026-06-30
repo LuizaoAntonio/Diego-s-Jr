@@ -10,6 +10,46 @@ Motor: **Godot 3.6.2** | Plataforma: **PC (Windows)**
 
 ## 📋 Visão Geral do Projeto
 
+LUIZ ANTONIO CAETANO DA SILVA <luiz.caetano.silva16@escola.pr.gov.br>
+07:29 (há 0 minuto)
+para TADEU
+
+## Backlog
+
+| Prioridade | História de usuário | Critérios de aceite |
+|------------|---------------------|----------------------|
+| Essencial | Como jogador, quero me movimentar pelo cenário e interagir com objetos para explorar o ambiente do jogo. | 1. O personagem responde aos inputs de movimento. 2. Objetos interagíveis exibem prompt de ação ao se aproximar. |
+| Essencial | Como jogador, quero encontrar e reproduzir fitas cassete para desbloquear memórias e avançar na narrativa. | 1. Fitas são coletáveis pelo cenário. 2. A reprodução ocorre apenas no gravador fixo. 3. Fitas são desbloqueadas em ordem cronológica. |
+| Essencial | Como jogador, quero salvar e carregar meu progresso para continuar o jogo em outra sessão. | 1. O jogo salva no slot escolhido pelo jogador. 2. Ao carregar, o estado do cenário e inventário é restaurado corretamente. |
+| Essencial | Como jogador, quero que o jogo exiba um menu de pausa funcional para que eu possa acessar opções sem sair da partida. | 1. ESC abre/fecha o menu de pausa. 2. Os botões de salvar, carregar e sair respondem corretamente. |
+| Essencial | Como jogador, quero que a inimiga sombra apareça e me persiga para sentir tensão e perigo durante a exploração. | 1. A sombra aparece após a terceira fita coletada. 2. Sua frequência de aparição varia conforme a fase da narrativa. 3. Ela desaparece após a última fita. |
+| Importante | Como jogador, quero acessar meu inventário para visualizar os itens coletados durante a exploração. | 1. A tecla Tab abre o inventário com animação lateral. 2. Shift+Tab exibe descrição do item selecionado. |
+| Importante | Como jogador, quero que o áudio das fittortoas cassete seja reproduzido com atenuação por distância para sentir que o som vem do gravador. | 1. O volume diminui conforme o jogador se afasta do gravador. 2. A atenuação é perceptível e coerente com a distância. |
+| Importante | Como jogador, quero que o jogo tenha efeitos visuais de estética PS1 para reforçar a atmosfera retrô e o clima de horror. | 1. O shader aplica dithering, grain, scanlines e vinheta. 2. A resolução interna é 320x240 sem afetar a nitidez da UI. |
+| Desejável | Como jogador, quero visualizar um ranking global de tempo de conclusão para comparar meu desempenho com outros jogadores. | 1. O ranking exibe pelo menos os 10 melhores tempos. 2. Os dados são salvos e consultados via backend Node.js. |
+| Desejável | Como jogador, quero que o jogo exiba mensagens de tutorial nas primeiras interações para entender os controles sem precisar de manual. | 1. Mensagens aparecem na primeira vez que o jogador se aproxima de objetos-chave. 2. As mensagens não se repetem após serem exibidas. |
+| Futuro | Como jogador, quero desbloquear uma segunda campanha (Lost Memories: Karen) para vivenciar a narrativa sob outra perspectiva. | 1. A campanha aparece como opção após concluir Lost Memories: Laura. 2. O save da Karen é independente do da Laura. |
+| Futuro | Como jogador, quero que o jogo tenha suporte a legendas em inglês para acessibilidade e alcance internacional. | 1. As legendas acompanham o áudio das fitas em tempo real. 2. O idioma pode ser alterado no menu de opções. |
+LUIZ ANTONIO CAETANO DA SILVA <luiz.caetano.silva16@escola.pr.gov.br>
+07:29 (há 0 minuto)
+para TADEU
+
+## Backlog
+
+| Prioridade | História de usuário | Critérios de aceite |
+|------------|---------------------|----------------------|
+| Essencial | Como jogador, quero me movimentar pelo cenário e interagir com objetos para explorar o ambiente do jogo. | 1. O personagem responde aos inputs de movimento. 2. Objetos interagíveis exibem prompt de ação ao se aproximar. |
+| Essencial | Como jogador, quero encontrar e reproduzir fitas cassete para desbloquear memórias e avançar na narrativa. | 1. Fitas são coletáveis pelo cenário. 2. A reprodução ocorre apenas no gravador fixo. 3. Fitas são desbloqueadas em ordem cronológica. |
+| Essencial | Como jogador, quero salvar e carregar meu progresso para continuar o jogo em outra sessão. | 1. O jogo salva no slot escolhido pelo jogador. 2. Ao carregar, o estado do cenário e inventário é restaurado corretamente. |
+| Essencial | Como jogador, quero que o jogo exiba um menu de pausa funcional para que eu possa acessar opções sem sair da partida. | 1. ESC abre/fecha o menu de pausa. 2. Os botões de salvar, carregar e sair respondem corretamente. |
+| Essencial | Como jogador, quero que a inimiga sombra apareça e me persiga para sentir tensão e perigo durante a exploração. | 1. A sombra aparece após a terceira fita coletada. 2. Sua frequência de aparição varia conforme a fase da narrativa. 3. Ela desaparece após a última fita. |
+| Importante | Como jogador, quero acessar meu inventário para visualizar os itens coletados durante a exploração. | 1. A tecla Tab abre o inventário com animação lateral. 2. Shift+Tab exibe descrição do item selecionado. |
+| Importante | Como jogador, quero que o áudio das fitas cassete seja reproduzido com atenuação por distância para sentir que o som vem do gravador. | 1. O volume diminui conforme o jogador se afasta do gravador. 2. A atenuação é perceptível e coerente com a distância. |
+| Importante | Como jogador, quero que o jogo tenha efeitos visuais de estética PS1 para reforçar a atmosfera retrô e o clima de horror. | 1. O shader aplica dithering, grain, scanlines e vinheta. 2. A resolução interna é 320x240 sem afetar a nitidez da UI. |
+| Desejável | Como jogador, quero visualizar um ranking global de tempo de conclusão para comparar meu desempenho com outros jogadores. | 1. O ranking exibe pelo menos os 10 melhores tempos. 2. Os dados são salvos e consultados via backend Node.js. |
+| Desejável | Como jogador, quero que o jogo exiba mensagens de tutorial nas primeiras interações para entender os controles sem precisar de manual. | 1. Mensagens aparecem na primeira vez que o jogador se aproxima de objetos-chave. 2. As mensagens não se repetem após serem exibidas. |
+| Futuro | Como jogador, quero desbloquear uma segunda campanha (Lost Memories: Karen) para vivenciar a narrativa sob outra perspectiva. | 1. A campanha aparece como opção após concluir Lost Memories: Laura. 2. O save da Karen é independente do da Laura. |
+| Futuro | Como jogador, quero que o jogo tenha suporte a legendas em inglês para acessibilidade e alcance internacional. | 1. As legendas acompanham o áudio das fitas em tempo real. 2. O idioma pode ser alterado no menu de opções. |
 | Campo | Descrição |
 |---|---|
 | Título | Lost Memories *(Memórias Perdidas)* |
@@ -269,6 +309,30 @@ A lanterna é encontrada como item no início do jogo. Sem ela, o jogador não c
 | Hellblade: Senua's Sacrifice | Representação respeitosa de saúde mental como tema central |
 | A Arte de Game Design — Jesse Schell | Referência bibliográfica fornecida pelo professor |
 | Blasfêmia | Jogo brasileiro; inventário não manipulável, somente visível |
+
+---
+
+
+LUIZ ANTONIO CAETANO DA SILVA <luiz.caetano.silva16@escola.pr.gov.br>
+07:29 (há 0 minuto)
+para TADEU
+
+## Backlog
+
+| Prioridade | História de usuário | Critérios de aceite |
+|------------|---------------------|----------------------|
+| Essencial | Como jogador, quero me movimentar pelo cenário e interagir com objetos para explorar o ambiente do jogo. | 1. O personagem responde aos inputs de movimento. 2. Objetos interagíveis exibem prompt de ação ao se aproximar. |
+| Essencial | Como jogador, quero encontrar e reproduzir fitas cassete para desbloquear memórias e avançar na narrativa. | 1. Fitas são coletáveis pelo cenário. 2. A reprodução ocorre apenas no gravador fixo. 3. Fitas são desbloqueadas em ordem cronológica. |
+| Essencial | Como jogador, quero salvar e carregar meu progresso para continuar o jogo em outra sessão. | 1. O jogo salva no slot escolhido pelo jogador. 2. Ao carregar, o estado do cenário e inventário é restaurado corretamente. |
+| Essencial | Como jogador, quero que o jogo exiba um menu de pausa funcional para que eu possa acessar opções sem sair da partida. | 1. ESC abre/fecha o menu de pausa. 2. Os botões de salvar, carregar e sair respondem corretamente. |
+| Essencial | Como jogador, quero que a inimiga sombra apareça e me persiga para sentir tensão e perigo durante a exploração. | 1. A sombra aparece após a terceira fita coletada. 2. Sua frequência de aparição varia conforme a fase da narrativa. 3. Ela desaparece após a última fita. |
+| Importante | Como jogador, quero acessar meu inventário para visualizar os itens coletados durante a exploração. | 1. A tecla Tab abre o inventário com animação lateral. 2. Shift+Tab exibe descrição do item selecionado. |
+| Importante | Como jogador, quero que o áudio das fitas cassete seja reproduzido com atenuação por distância para sentir que o som vem do gravador. | 1. O volume diminui conforme o jogador se afasta do gravador. 2. A atenuação é perceptível e coerente com a distância. |
+| Importante | Como jogador, quero que o jogo tenha efeitos visuais de estética PS1 para reforçar a atmosfera retrô e o clima de horror. | 1. O shader aplica dithering, grain, scanlines e vinheta. 2. A resolução interna é 320x240 sem afetar a nitidez da UI. |
+| Desejável | Como jogador, quero visualizar um ranking global de tempo de conclusão para comparar meu desempenho com outros jogadores. | 1. O ranking exibe pelo menos os 10 melhores tempos. 2. Os dados são salvos e consultados via backend Node.js. |
+| Desejável | Como jogador, quero que o jogo exiba mensagens de tutorial nas primeiras interações para entender os controles sem precisar de manual. | 1. Mensagens aparecem na primeira vez que o jogador se aproxima de objetos-chave. 2. As mensagens não se repetem após serem exibidas. |
+| Futuro | Como jogador, quero desbloquear uma segunda campanha (Lost Memories: Karen) para vivenciar a narrativa sob outra perspectiva. | 1. A campanha aparece como opção após concluir Lost Memories: Laura. 2. O save da Karen é independente do da Laura. |
+| Futuro | Como jogador, quero que o jogo tenha suporte a legendas em inglês para acessibilidade e alcance internacional. | 1. As legendas acompanham o áudio das fitas em tempo real. 2. O idioma pode ser alterado no menu de opções. |
 
 ---
 
