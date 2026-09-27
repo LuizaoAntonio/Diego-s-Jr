@@ -40,26 +40,105 @@ const pool = mysql.createPool({
 
 const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutos
 
-async function ensureUserColumns() {
+/** Cria tabelas e colunas no boot — não precisa rodar SQL manual no Railway. */
+async function ensureSchema() {
+    const tables = [
+        `CREATE TABLE IF NOT EXISTS users (
+            id            INT AUTO_INCREMENT PRIMARY KEY,
+            username      VARCHAR(50)  NOT NULL UNIQUE,
+            email         VARCHAR(255) NOT NULL UNIQUE,
+            password_hash VARCHAR(255) NOT NULL,
+            nickname      VARCHAR(50)  DEFAULT NULL,
+            bio           VARCHAR(300) DEFAULT NULL,
+            avatar_data   LONGTEXT     DEFAULT NULL,
+            role          ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+            is_banned     TINYINT(1)   NOT NULL DEFAULT 0,
+            ban_reason    VARCHAR(500) DEFAULT NULL,
+            banned_at     TIMESTAMP    NULL DEFAULT NULL,
+            nickname_changed_at TIMESTAMP NULL DEFAULT NULL,
+            password_changed_at TIMESTAMP NULL DEFAULT NULL,
+            last_seen     DATETIME NULL DEFAULT NULL,
+            banner_color  VARCHAR(7) NULL DEFAULT '#8b5cf6',
+            email_verified TINYINT(1) NOT NULL DEFAULT 0,
+            email_verify_token VARCHAR(64) NULL DEFAULT NULL,
+            email_verify_expires DATETIME NULL DEFAULT NULL,
+            created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB`,
+        `CREATE TABLE IF NOT EXISTS game_progress (
+            id               INT AUTO_INCREMENT PRIMARY KEY,
+            user_id          INT NOT NULL UNIQUE,
+            playtime_seconds INT     NOT NULL DEFAULT 0,
+            fitas_normais    TINYINT NOT NULL DEFAULT 0,
+            fitas_douradas   TINYINT NOT NULL DEFAULT 0,
+            cartas           TINYINT NOT NULL DEFAULT 0,
+            updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            CONSTRAINT fk_progress_user FOREIGN KEY (user_id)
+                REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB`,
+        `CREATE TABLE IF NOT EXISTS community_posts (
+            id         INT AUTO_INCREMENT PRIMARY KEY,
+            user_id    INT NOT NULL,
+            content    VARCHAR(500) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_post_user FOREIGN KEY (user_id)
+                REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB`,
+        `CREATE TABLE IF NOT EXISTS bug_reports (
+            id         INT AUTO_INCREMENT PRIMARY KEY,
+            user_id    INT NOT NULL,
+            title      VARCHAR(120) NOT NULL,
+            description VARCHAR(1000) NOT NULL,
+            status     ENUM('open', 'reviewing', 'resolved') NOT NULL DEFAULT 'open',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_bug_user FOREIGN KEY (user_id)
+                REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB`,
+        `CREATE TABLE IF NOT EXISTS cloud_saves (
+            user_id INT NOT NULL,
+            slot INT NOT NULL,
+            save_json LONGTEXT NOT NULL,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (user_id, slot),
+            CONSTRAINT fk_cloud_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB`,
+    ];
+    for (const sql of tables) {
+        try {
+            await pool.query(sql);
+        } catch (e) {
+            console.error('[schema] CREATE falhou:', e.message);
+        }
+    }
+    // Colunas extras em users (banco antigo / tabela incompleta)
     const cols = [
+        "ALTER TABLE users ADD COLUMN nickname VARCHAR(50) DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN bio VARCHAR(300) DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN avatar_data LONGTEXT DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN role ENUM('user', 'admin') NOT NULL DEFAULT 'user'",
+        "ALTER TABLE users ADD COLUMN is_banned TINYINT(1) NOT NULL DEFAULT 0",
+        "ALTER TABLE users ADD COLUMN ban_reason VARCHAR(500) DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN banned_at TIMESTAMP NULL DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN nickname_changed_at TIMESTAMP NULL DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN password_changed_at TIMESTAMP NULL DEFAULT NULL",
         "ALTER TABLE users ADD COLUMN last_seen DATETIME NULL DEFAULT NULL",
         "ALTER TABLE users ADD COLUMN banner_color VARCHAR(7) NULL DEFAULT '#8b5cf6'",
         "ALTER TABLE users ADD COLUMN email_verified TINYINT(1) NOT NULL DEFAULT 0",
         "ALTER TABLE users ADD COLUMN email_verify_token VARCHAR(64) NULL DEFAULT NULL",
         "ALTER TABLE users ADD COLUMN email_verify_expires DATETIME NULL DEFAULT NULL",
+        "ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
     ];
     for (const sql of cols) {
         try { await pool.query(sql); } catch (e) { /* já existe */ }
     }
-    // TEMP: verificação de e-mail DESLIGADA (Netlify / sem domínio SMTP).
-    // Libera todas as contas pendentes pra não ficarem presas.
+    // TEMP: verificação de e-mail DESLIGADA (sem SMTP)
     try {
         await pool.query(
             "UPDATE users SET email_verified = 1, email_verify_token = NULL, email_verify_expires = NULL WHERE email_verified = 0"
         );
     } catch (e) { /* ignore */ }
+    console.log('[schema] Tabelas verificadas/criadas.');
 }
-ensureUserColumns().catch(err => console.error('ensureUserColumns', err));
+ensureSchema().catch(err => console.error('ensureSchema', err));
 
 const VERIFY_TOKEN_HOURS = 24;
 
