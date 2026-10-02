@@ -49,6 +49,7 @@ Enquanto coleta essas memórias, uma sombra a persegue pelos cômodos — uma ma
 - [Divisão de Tarefas](#-divisão-de-tarefas)
 - [Cronograma](#-cronograma)
 - [Referências e Inspirações](#-referências-e-inspirações)
+
 ---
 
 ## 🕯️ História Detalhada
@@ -268,6 +269,9 @@ A lanterna é encontrada como item no início do jogo. Sem ela, o jogador não c
 | Hellblade: Senua's Sacrifice | Representação respeitosa de saúde mental como tema central |
 | A Arte de Game Design — Jesse Schell | Referência bibliográfica fornecida pelo professor |
 | Blasfêmia | Jogo brasileiro; inventário não manipulável, somente visível |
+
+---
+
 # Limbo of Memories
 
 Jogo de terror psicológico em primeira pessoa, com estética PS1/low-poly, desenvolvido em **Godot Engine 3.6** como Trabalho de Conclusão de Curso.
