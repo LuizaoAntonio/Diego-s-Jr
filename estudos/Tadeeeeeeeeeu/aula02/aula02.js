@@ -25,3 +25,4 @@ Rejected (Rejeitada): Quando a operação falhou ou deu algum erro;
 
 9-O fetch só falha se houver erro de rede (sem internet). Se o servidor responder (mesmo com erro 404), a comunicação funcionou, por isso ele não lança um erro automaticamente
 10-O .map() roda tudo ao mesmo tempo e não espera o await. O resultado será apenas uma lista de Promises pendentes (ex: [Promise, Promise])
+

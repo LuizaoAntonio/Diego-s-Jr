@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu primeiríssimo React - UHUUUU</title>
+</head>
+<body>
+    
+    <div id = "root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        function App(){
+            return(
+                <div>
+                    <Cabecalho />
+                    <Cartao />
+                    <Cartao />
+                    <Cartao />
+                </div>
+            );
+        }
+
+        function Cabecalho(){
+            return(
+                <header>
+                    <h1>Sistema da Squad</h1>
+                    <p>Projeto intregador do 3° trimestre</p>
+                </header>
+            );
+        }
+
+        function Cartao(){
+            return(
+                <div>
+                    <h3>Título do Item</h3>
+                    <p>Descrição do Item</p>
+                </div>
+            );
+        }
+
+        function Lista(){
+            const tarefas=[
+                { id: 1, texto: "Estudar React" },
+                { id: 2, texto: "Levar o Cachorro" }
+            ];
+
+            return(
+                <ul>
+                    {tarefas.map((t) => <li key={t.id}>{t.texto}</li>)}
+                </ul>
+            );
+        }
+
+        const raiz = ReactDOM.createRoot(document.getElementById("root"));
+        raiz.render(<App />);
+    </script>
+
+</body>
+</html>
