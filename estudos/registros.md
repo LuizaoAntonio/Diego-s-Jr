@@ -1,0 +1,1 @@
+1 - Oi, é o Tadeu. Fiz o esqueleto do HTML pra todo mundo poder fazer o que foi designado em suas devidas partes do código (que está em comentários no código com o nome da pessoa). Também já fiz o sistema de ranking e o style.css do site.
