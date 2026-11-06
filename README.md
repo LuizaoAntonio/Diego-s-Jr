@@ -22,11 +22,10 @@ A casa da protagonista representa suas memórias de infância. O foco temático 
 | Fase | Foco | Progresso |
 |---|---|---|
 | 1 | A main abre e roda | 0% (0/5) |
-| 2 | Bugs que os jogadores acharam | 0% (0/3) |
-| 3 | Conta e login dentro do jogo | 0% (0/2) |
-| 4 | API, segurança e contrato | 0% (0/5) |
-| 5 | Peso do repositório | 0% (0/3) |
-| 6 | Telas do Figma (ExpoCEEP 09/10) | 0% (0/3) |
+| 2 | Bugs que os jogadores acharam | 35% (0/3) |
+| 3 | Conta e login dentro do jogo | 95% (2/2) |
+| 4 | API, segurança e contrato | 90% (4/5) |
+| 5 | Peso do repositório | 10% (0/3) |
 
 As fases estão em ordem de prioridade, não de gosto. A **Fase 1** vem primeiro porque
 um clone que não abre trava todo mundo, e a **Fase 6** vem por último porque não adianta
