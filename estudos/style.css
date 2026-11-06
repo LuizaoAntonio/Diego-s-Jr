@@ -1,126 +1,372 @@
+/* ============================================
+   Limbo of Memories - Ranking
+   Tema escuro inspirado no site oficial
+   ============================================ */
+
+:root {
+    --bg: #07060d;
+    --card: rgba(22, 18, 36, 0.72);
+    --card2: rgba(255, 255, 255, 0.045);
+    --text: #f1edff;
+    --h: #ece4ff;
+    --muted: #a59fbd;
+    --a: #a78bfa;
+    --a2: #7c3aed;
+    --border: rgba(255, 255, 255, 0.09);
+    --gold: #eab308;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --shadow: rgba(0, 0, 0, 0.6);
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #0d0b14; /* Roxo escuro do Limbo */
-    color: #e2e0e8;
-}
-
-.app-container {
-    display: flex;
-    flex-direction: column;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
 }
 
-.tela-ranking {
-    width: min(100% - 32px, 1200px);
-    margin: 0 auto;
-    padding: 32px 0;
-    flex: 1;
-}
-
-.conteudo-flex {
+/* ========== CABEÇALHO (Mariane) ========== */
+.cabecalho {
     display: flex;
-    gap: 24px;
-    margin-top: 32px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 28px;
+    background: rgba(14, 11, 24, 0.85);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* ==================================================
-   ESTILO DO MEU COMPONENTE: PodioRanking (Tadeu)
-   ================================================== */
-.podio {
-    background: #141122;
-    padding: 32px;
-    border-radius: 16px;
-    border: 1px solid #2d2444;
+.cabecalho-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icone {
+    font-size: 1.8rem;
+}
+
+.logo-titulo {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 1.35rem;
+    margin: 0;
+    background: linear-gradient(90deg, var(--a), #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo-sub {
+    margin: 2px 0 0;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.cabecalho-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-item {
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    cursor: default;
+    transition: 0.2s;
+}
+
+.nav-item.ativo {
+    background: rgba(167, 139, 250, 0.15);
+    color: var(--a);
+}
+
+/* ========== CONTAINER PRINCIPAL ========== */
+.app-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+}
+
+.tela-ranking {
+    padding-top: 24px;
+}
+
+.carregando,
+.aviso-erro,
+.sem-resultados {
     text-align: center;
+    padding: 40px 16px;
+    color: var(--muted);
+}
+
+.aviso-erro {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+/* ========== PÓDIO (Tadeu) ========== */
+.podio {
+    margin-bottom: 32px;
 }
 
 .titulo-podio {
-    font-size: 24px;
-    margin-bottom: 24px;
-    color: #ffffff;
+    font-family: 'Cinzel', Georgia, serif;
+    text-align: center;
+    font-size: 1.6rem;
+    margin: 0 0 20px;
+    color: var(--h);
 }
 
 .podio-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Alinha os cards por baixo como um pódio real */
-    gap: 20px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: 16px;
+    align-items: end;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
 .podio-card {
-    background: #1c1830;
-    border-radius: 12px;
-    padding: 24px;
-    width: 220px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    border: 1px solid #3c325c;
-    transition: transform 0.3s;
+    gap: 6px;
+    text-align: center;
+    padding: 20px 12px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .podio-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
+    border-color: var(--a);
 }
 
-/* Diferenciação de tamanho e destaque por posição */
 .lugar-1 {
-    order: 2; /* Deixa o primeiro colocado no centro */
-    border-color: #fbbf24; /* Destaque Ouro */
-    padding: 36px 24px; /* Fica mais alto na tela */
+    padding-top: 32px;
+    padding-bottom: 24px;
+    border-color: var(--gold);
+    box-shadow: 0 0 40px -10px rgba(234, 179, 8, 0.45);
+    order: 2;
 }
 
-.lugar-2 {
-    order: 1; /* Esquerda */
-    border-color: #94a3b8; /* Prata */
-}
-
-.lugar-3 {
-    order: 3; /* Direita */
-    border-color: #b45309; /* Bronze */
-}
+.lugar-2 { order: 1; }
+.lugar-3 { order: 3; }
 
 .medalha {
-    font-size: 20px;
-    font-weight: bold;
-    width: 40px;
-    height: 40px;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.avatar-placeholder {
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
+    background: linear-gradient(135deg, var(--a2), var(--a));
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #2d2444;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: white;
+    margin: 4px 0;
 }
 
-.lugar-1 .medalha { background: #fbbf24; color: #0d0b14; }
-.lugar-2 .medalha { background: #94a3b8; color: #0d0b14; }
-.lugar-3 .medalha { background: #b45309; color: #ffffff; }
+.lugar-1 .avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    font-size: 1.7rem;
+}
 
 .nome-player {
-    font-size: 18px;
-    margin: 0;
-    color: #ffffff;
+    margin: 4px 0 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--h);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .stats-player {
     display: flex;
-    gap: 12px;
-    font-size: 14px;
-    color: #a7a2bc;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
 }
 
 .stats-player .ouro {
-    color: #fbbf24;
+    color: var(--gold);
 }
 
 .tempo-player {
-    font-size: 13px;
-    color: #6b6680;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* ========== LAYOUT FLEX (filtros + lista) ========== */
+.conteudo-flex {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    margin-top: 8px;
+}
+
+@media (max-width: 760px) {
+    .conteudo-flex {
+        grid-template-columns: 1fr;
+    }
+    .podio-container {
+        gap: 8px;
+    }
+    .podio-card {
+        padding: 14px 6px;
+    }
+    .lugar-1 {
+        padding-top: 20px;
+    }
+}
+
+/* ========== BARRA DE FILTROS (Pedro Guedes) ========== */
+.barra-filtros {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 16px;
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+}
+
+.titulo-filtros {
+    margin: 0 0 16px;
+    font-size: 1.05rem;
+    color: var(--h);
+}
+
+.campo-busca {
+    margin-bottom: 20px;
+}
+
+.campo-busca label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.input-busca {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-busca:focus {
+    border-color: var(--a);
+}
+
+.subtitulo-filtro {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.grupo-botoes-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-filtro {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 0.88rem;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-filtro:hover {
+    background: rgba(167, 139, 250, 0.1);
+    border-color: var(--a);
+}
+
+.btn-filtro.ativo {
+    background: rgba(167, 139, 250, 0.2);
+    border-color: var(--a);
+    color: var(--a);
+}
+
+.btn-reset {
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+/* ========== LISTA DE RANKING ========== */
+.lista-ranking {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.titulo-lista {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    color: var(--h);
+}
+
+/* Placeholders para os outros componentes */
+.contador-placeholder,
+.linha-jogador-placeholder {
+    background: var(--card2);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.linha-jogador-placeholder {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+/* ========== RODAPÉ (Pedro Cassiano) ========== */
+.rodape {
+    margin-top: 48px;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
 }
