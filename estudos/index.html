@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limbo of Memories - Ranking do Grupo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com"></script>
+    <script src="https://unpkg.com"></script>
+    <script src="https://unpkg.com"></script>
+
+    <script type="text/babel">
+
+        // DADOS FIXOS DA TELA (Usados para alimentar o pódio do Tadeu)
+        const rankingJogadores = [
+            { id: 1, posicao: 1, nome: "Laura80s", fitas: 7, fitasOuro: 2, cartas: 20, tempo: "1h 15m" },
+            { id: 2, posicao: 2, nome: "DiegoJr", fitas: 5, fitasOuro: 1, cartas: 14, tempo: "2h 05m" },
+            { id: 3, posicao: 3, nome: "Noxafuyf", fitas: 4, fitasOuro: 0, cartas: 10, tempo: "1h 45m" }
+        ];
+
+        // ==========================================
+        // COMPONENTE: CabecalhoLimbo
+        // RESPONSÁVEL: Mariane
+        // ==========================================
+        function CabecalhoLimbo() {
+            return (
+                /* Mariane */
+                <header></header>
+            );
+        }
+
+        // ==========================================
+        // MEU COMPONENTE: PodioRanking
+        // RESPONSÁVEL: Tadeu (PRONTO)
+        // ==========================================
+        function PodioRanking({ jogadores }) {
+            // Filtra e organiza para garantir que pegamos apenas o top 3 na ordem correta
+            const top3 = jogadores.filter(j => j.posicao <= 3).sort((a, b) => a.posicao - b.posicao);
+
+            return (
+                <section className="podio">
+                    <h2 className="titulo-podio">🏆 Top Players do Limbo</h2>
+                    <div className="podio-container">
+                        {top3.map((player) => (
+                            <div key={player.id} className={`podio-card lugar-${player.posicao}`}>
+                                <div className="medalha">{player.posicao}º</div>
+                                <h3 className="nome-player">{player.nome}</h3>
+                                <div className="stats-player">
+                                    <span>🎞 {player.fitas}</span>
+                                    <span className="ouro">✦ {player.fitasOuro}</span>
+                                    <span>✉ {player.cartas}</span>
+                                </div>
+                                <span className="tempo-player">⏱ {player.tempo}</span>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        }
+
+        // ==========================================
+        // COMPONENTE: BarraLateralFiltros
+        // RESPONSÁVEL: Pedro Guedes
+        // ==========================================
+        function BarraLateralFiltros() {
+            return (
+                /* Pedro Guedes */
+                <aside></aside>
+            );
+        }
+
+        // ==========================================
+        // COMPONENTE: ContadorColecionaveis
+        // RESPONSÁVEL: Luiz
+        // ==========================================
+        function ContadorColecionaveis() {
+            return (
+                /* Luiz */
+                <div></div>
+            );
+        }
+
+        // ==========================================
+        // COMPONENTE: LinhaJogador
+        // RESPONSÁVEL: Matheus
+        // ==========================================
+        function LinhaJogador() {
+            return (
+                /* Matheus */
+                <div></div>
+            );
+        }
+
+        // ==========================================
+        // COMPONENTE: RodapeLimbo
+        // RESPONSÁVEL: Pedro Cassiano
+        // ==========================================
+        function RodapeLimbo() {
+            return (
+                /* Pedro Cassiano */
+                <footer></footer>
+            );
+        }
+
+        // ==========================================
+        // TELA PRINCIPAL (JUNÇÃO DOS COMPONENTES)
+        // ==========================================
+        function App() {
+            // Estado para guardar os jogadores vindos da API do Netlify
+            const [rankingJogadores, setRankingJogadores] = React.useState([]);
+            const [carregando, setCarregando] = React.useState(true);
+
+            React.useEffect(() => {
+                // Faz a requisição direto na API oficial de vocês
+                fetch("https://netlify.app")
+                    .then((resposta) => {
+                        if (!resposta.ok) {
+                            throw new Error("Erro ao carregar dados do servidor");
+                        }
+                        return resposta.json();
+                    })
+                    .then((dados) => {
+                        // Aqui os dados da API entram no estado e alimentam o seu PodioRanking
+                        setRankingJogadores(dados); 
+                        setCarregando(false);
+                    })
+                    .catch((erro) => {
+                        console.error("Erro na API do Limbo:", erro);
+                        setCarregando(false);
+                    });
+            }, []);
+
+            return (
+                <div className="app-container">
+                    <CabecalhoLimbo />
+                    
+                    <main className="tela-ranking">
+                        {carregando ? (
+                            <p style={{ textAlign: 'center', color: '#8b5cf6', padding: '40px' }}>
+                                Carregando registros do Limbo...
+                            </p>
+                        ) : (
+                            <>
+                                {/* Seu componente recebendo os dados purificados da API */}
+                                <PodioRanking jogadores={rankingJogadores} />
+                                
+                                <div className="conteudo-flex">
+                                    <BarraLateralFiltros />
+                                    <section className="lista-ranking">
+                                        <LinhaJogador />
+                                    </section>
+                                </div>
+                            </>
+                        )}
+                    </main>
+
+                    <RodapeLimbo />
+                </div>
+            );
+        }
+
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+</body>
+</html>
