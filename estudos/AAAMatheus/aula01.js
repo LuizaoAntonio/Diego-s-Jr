@@ -14,3 +14,22 @@ const p = {titulo: "Caneca", preco: 25}; nome = p.titulo; preco = p.preco; conso
 const ehCaro = num => num > 100? "verdadeiro" : "falso";
 
 //atv6
+const cores = ["azul", "verde"] const cores2 = [...cores, "vermelho"];
+
+//atv7
+const pEmPromocao = {...p, preco: 20};
+
+//atv8
+const emEstoque = produtos.filter(p => p.estoque > 0).map(p => p.nome);
+
+//atv9
+//falta o return para que o código devolva algo para o usuário
+
+//atv10
+//sem chaves importa o elemento como padrão, o segundo importa um elemento específico nomeado
+
+//atv11
+//push modifica o array, react não consegue ver essa mudança e não faz a renderização
+
+//atv12
+const maisDeCinco = produtos.filter(p => p.estoque > 5).map(p => p.nome);
