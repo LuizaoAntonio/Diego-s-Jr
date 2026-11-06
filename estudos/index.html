@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbo of Memories - Ranking do Grupo</title>
+    <title>Limbo of Memories - Ranking</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="root"></div>
 
-    <script src="https://unpkg.com"></script>
-    <script src="https://unpkg.com"></script>
-    <script src="https://unpkg.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
 
-        // DADOS FIXOS DA TELA (Usados para alimentar o pódio do Tadeu)
-        const rankingJogadores = [
+        // ==========================================
+        // DADOS DE FALLBACK (caso a API falhe)
+        // ==========================================
+        const rankingFallback = [
             { id: 1, posicao: 1, nome: "Laura80s", fitas: 7, fitasOuro: 2, cartas: 20, tempo: "1h 15m" },
             { id: 2, posicao: 2, nome: "DiegoJr", fitas: 5, fitasOuro: 1, cartas: 14, tempo: "2h 05m" },
-            { id: 3, posicao: 3, nome: "Noxafuyf", fitas: 4, fitasOuro: 0, cartas: 10, tempo: "1h 45m" }
+            { id: 3, posicao: 3, nome: "Noxafuyf", fitas: 4, fitasOuro: 0, cartas: 10, tempo: "1h 45m" },
+            { id: 4, posicao: 4, nome: "Rafakvv", fitas: 3, fitasOuro: 1, cartas: 8, tempo: "58m" },
+            { id: 5, posicao: 5, nome: "YunoYuzuki", fitas: 2, fitasOuro: 0, cartas: 5, tempo: "32m" }
         ];
 
         // ==========================================
@@ -28,31 +34,62 @@
         // ==========================================
         function CabecalhoLimbo() {
             return (
-                /* Mariane */
-                <header></header>
+                <header className="cabecalho">
+                    <div className="cabecalho-logo">
+                        <span className="logo-icone">🎞️</span>
+                        <div>
+                            <h1 className="logo-titulo">Limbo of Memories</h1>
+                            <p className="logo-sub">Ranking do Grupo</p>
+                        </div>
+                    </div>
+                    <nav className="cabecalho-nav">
+                        <span className="nav-item ativo">🏆 Ranking</span>
+                        <span className="nav-item">👥 Social</span>
+                        <span className="nav-item">💬 Chat</span>
+                    </nav>
+                </header>
             );
         }
 
         // ==========================================
         // MEU COMPONENTE: PodioRanking
-        // RESPONSÁVEL: Tadeu (PRONTO)
+        // RESPONSÁVEL: Tadeu
         // ==========================================
         function PodioRanking({ jogadores }) {
-            // Filtra e organiza para garantir que pegamos apenas o top 3 na ordem correta
-            const top3 = jogadores.filter(j => j.posicao <= 3).sort((a, b) => a.posicao - b.posicao);
+            if (!jogadores || jogadores.length === 0) return null;
+
+            // Garante top 3 ordenado
+            const top3 = [...jogadores]
+                .filter(j => j.posicao <= 3)
+                .sort((a, b) => a.posicao - b.posicao);
+
+            // Ordem visual clássica do pódio: 2º | 1º | 3º
+            const ordemVisual = [
+                top3.find(p => p.posicao === 2),
+                top3.find(p => p.posicao === 1),
+                top3.find(p => p.posicao === 3)
+            ].filter(Boolean);
+
+            const medalhas = { 1: "🥇", 2: "🥈", 3: "🥉" };
 
             return (
                 <section className="podio">
                     <h2 className="titulo-podio">🏆 Top Players do Limbo</h2>
                     <div className="podio-container">
-                        {top3.map((player) => (
-                            <div key={player.id} className={`podio-card lugar-${player.posicao}`}>
-                                <div className="medalha">{player.posicao}º</div>
+                        {ordemVisual.map((player) => (
+                            <div
+                                key={player.id}
+                                className={`podio-card lugar-${player.posicao}`}
+                            >
+                                <div className="medalha">{medalhas[player.posicao] || `${player.posicao}º`}</div>
+                                <div className="avatar-placeholder">
+                                    {player.nome.charAt(0).toUpperCase()}
+                                </div>
                                 <h3 className="nome-player">{player.nome}</h3>
                                 <div className="stats-player">
-                                    <span>🎞 {player.fitas}</span>
-                                    <span className="ouro">✦ {player.fitasOuro}</span>
-                                    <span>✉ {player.cartas}</span>
+                                    <span title="Fitas">🎞 {player.fitas}</span>
+                                    <span className="ouro" title="Fitas de Ouro">✦ {player.fitasOuro}</span>
+                                    <span title="Cartas">✉ {player.cartas}</span>
                                 </div>
                                 <span className="tempo-player">⏱ {player.tempo}</span>
                             </div>
@@ -72,22 +109,17 @@
             const handleBusca = (e) => {
                 const valor = e.target.value;
                 setTermoBusca(valor);
-                if (onSearch) {
-                    onSearch(valor);
-                }
+                if (onSearch) onSearch(valor);
             };
 
             const handleFiltro = (tipo) => {
-                if (onFilter) {
-                    onFilter(tipo);
-                }
+                if (onFilter) onFilter(tipo);
             };
 
             return (
                 <aside className="barra-filtros">
                     <h3 className="titulo-filtros">Filtros do Ranking</h3>
 
-                    {/* Campo de busca por nome ou ID */}
                     <div className="campo-busca">
                         <label htmlFor="busca-jogador">Buscar jogador</label>
                         <input
@@ -100,7 +132,6 @@
                         />
                     </div>
 
-                    {/* Botões de filtro */}
                     <div className="grupo-botoes-filtro">
                         <p className="subtitulo-filtro">Ordenar por</p>
 
@@ -148,37 +179,51 @@
             );
         }
 
-
         // ==========================================
         // COMPONENTE: ContadorColecionaveis
         // RESPONSÁVEL: Luiz
+        // TODO: Implementar contador de fitas/cartas do usuário logado
         // ==========================================
         function ContadorColecionaveis() {
             return (
-                /* Luiz */
-                <div></div>
+                /* Luiz — coloque aqui o seu componente de contador */
+                <div className="contador-placeholder">
+                    <p>Contador de Colecionáveis (Luiz)</p>
+                </div>
             );
         }
 
         // ==========================================
         // COMPONENTE: LinhaJogador
         // RESPONSÁVEL: Matheus
+        // TODO: Receber props do jogador e renderizar a linha da lista
         // ==========================================
-        function LinhaJogador() {
+        function LinhaJogador({ jogador }) {
+            // Matheus: use as props abaixo para montar a linha
+            // jogador.posicao, jogador.nome, jogador.fitas, etc.
+            if (!jogador) return null;
+
             return (
-                /* Matheus */
-                <div></div>
+                /* Matheus — substitua este placeholder pela linha completa */
+                <div className="linha-jogador-placeholder">
+                    <span>{jogador.posicao}º</span>
+                    <span>{jogador.nome}</span>
+                    <span>🎞 {jogador.fitas}</span>
+                </div>
             );
         }
 
         // ==========================================
         // COMPONENTE: RodapeLimbo
         // RESPONSÁVEL: Pedro Cassiano
+        // TODO: Footer com créditos e links
         // ==========================================
         function RodapeLimbo() {
             return (
-                /* Pedro Cassiano */
-                <footer></footer>
+                /* Pedro Cassiano — implemente o rodapé aqui */
+                <footer className="rodape">
+                    <p>Limbo of Memories · Ranking · Feito com 💜 pela equipe</p>
+                </footer>
             );
         }
 
@@ -186,48 +231,119 @@
         // TELA PRINCIPAL (JUNÇÃO DOS COMPONENTES)
         // ==========================================
         function App() {
-            // Estado para guardar os jogadores vindos da API do Netlify
             const [rankingJogadores, setRankingJogadores] = React.useState([]);
             const [carregando, setCarregando] = React.useState(true);
+            const [erro, setErro] = React.useState(null);
+            const [filtroAtivo, setFiltroAtivo] = React.useState("padrao");
+            const [termoBusca, setTermoBusca] = React.useState("");
 
             React.useEffect(() => {
-                // Faz a requisição direto na API oficial de vocês
-                fetch("https://netlify.app")
+                fetch("https://limboofmemories.netlify.app/api")
                     .then((resposta) => {
-                        if (!resposta.ok) {
-                            throw new Error("Erro ao carregar dados do servidor");
-                        }
+                        if (!resposta.ok) throw new Error("Erro ao carregar ranking");
                         return resposta.json();
                     })
                     .then((dados) => {
-                        // Aqui os dados da API entram no estado e alimentam o seu PodioRanking
-                        setRankingJogadores(dados); 
+                        // Mapeia os dados reais da API
+                        const mapeado = Array.isArray(dados)
+                            ? dados.map((item, index) => {
+                                // Formata o tempo de segundos para "Xh Ym"
+                                const segundos = item.playtime_seconds || 0;
+                                const horas = Math.floor(segundos / 3600);
+                                const minutos = Math.floor((segundos % 3600) / 60);
+                                const tempoFormatado = horas > 0
+                                    ? `${horas}h ${minutos}m`
+                                    : `${minutos}m`;
+
+                                return {
+                                    id: item.id || index + 1,
+                                    posicao: index + 1, // a API já vem ordenada
+                                    nome: item.username || item.nickname || "Jogador",
+                                    fitas: item.fitas_normais || 0,
+                                    fitasOuro: item.fitas_douradas || 0,
+                                    cartas: item.cartas || 0,
+                                    tempo: tempoFormatado
+                                };
+                            })
+                            : rankingFallback;
+
+                        setRankingJogadores(mapeado.length > 0 ? mapeado : rankingFallback);
                         setCarregando(false);
                     })
-                    .catch((erro) => {
-                        console.error("Erro na API do Limbo:", erro);
+                    .catch((err) => {
+                        console.error("Erro na API do Limbo:", err);
+                        setErro("Não foi possível carregar o ranking. Usando dados de exemplo.");
+                        setRankingJogadores(rankingFallback);
                         setCarregando(false);
                     });
             }, []);
 
+            // Filtra e ordena a lista (usado futuramente pela LinhaJogador)
+            const listaFiltrada = React.useMemo(() => {
+                let lista = [...rankingJogadores];
+
+                // Busca por nome
+                if (termoBusca.trim()) {
+                    const termo = termoBusca.toLowerCase();
+                    lista = lista.filter(j =>
+                        j.nome.toLowerCase().includes(termo) ||
+                        String(j.id).includes(termo)
+                    );
+                }
+
+                // Ordenação
+                if (filtroAtivo === "fitas") {
+                    lista.sort((a, b) => b.fitas - a.fitas);
+                } else if (filtroAtivo === "cartas") {
+                    lista.sort((a, b) => b.cartas - a.cartas);
+                } else if (filtroAtivo === "ouro") {
+                    lista.sort((a, b) => b.fitasOuro - a.fitasOuro);
+                } else if (filtroAtivo === "tempo") {
+                    // Ordena do menor para o maior tempo (simplificado)
+                    lista.sort((a, b) => a.tempo.localeCompare(b.tempo));
+                }
+                // "padrao" mantém a ordem original (já vem ordenada da API)
+
+                return lista;
+            }, [rankingJogadores, filtroAtivo, termoBusca]);
+
             return (
                 <div className="app-container">
                     <CabecalhoLimbo />
-                    
+
                     <main className="tela-ranking">
                         {carregando ? (
-                            <p style={{ textAlign: 'center', color: '#8b5cf6', padding: '40px' }}>
-                                Carregando registros do Limbo...
-                            </p>
+                            <div className="carregando">
+                                <p>Carregando registros do Limbo...</p>
+                            </div>
                         ) : (
                             <>
-                                {/* Seu componente recebendo os dados purificados da API */}
+                                {erro && <p className="aviso-erro">{erro}</p>}
+
+                                {/* Pódio — Tadeu */}
                                 <PodioRanking jogadores={rankingJogadores} />
-                                
+
                                 <div className="conteudo-flex">
-                                    <BarraLateralFiltros />
+                                    {/* Filtros — Pedro Guedes */}
+                                    <BarraLateralFiltros
+                                        onSearch={setTermoBusca}
+                                        onFilter={setFiltroAtivo}
+                                        filtroAtivo={filtroAtivo}
+                                    />
+
                                     <section className="lista-ranking">
-                                        <LinhaJogador />
+                                        <h3 className="titulo-lista">Lista Completa</h3>
+                                        {/* Contador — Luiz (opcional, pode ficar acima da lista) */}
+                                        <ContadorColecionaveis />
+
+                                        {/* Lista de jogadores — Matheus */}
+                                        {listaFiltrada.length === 0 ? (
+                                            <p className="sem-resultados">Nenhum jogador encontrado.</p>
+                                        ) : (
+                                            listaFiltrada.map((jogador) => (
+                                                <LinhaJogador key={jogador.id} jogador={jogador} />
+                                            ))
+                                        )}
                                     </section>
                                 </div>
                             </>
@@ -238,7 +354,6 @@
                 </div>
             );
         }
-
 
         ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
