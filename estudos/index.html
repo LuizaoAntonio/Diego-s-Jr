@@ -66,12 +66,88 @@
         // COMPONENTE: BarraLateralFiltros
         // RESPONSÁVEL: Pedro Guedes
         // ==========================================
-        function BarraLateralFiltros() {
+        function BarraLateralFiltros({ onSearch, onFilter, filtroAtivo }) {
+            const [termoBusca, setTermoBusca] = React.useState("");
+
+            const handleBusca = (e) => {
+                const valor = e.target.value;
+                setTermoBusca(valor);
+                if (onSearch) {
+                    onSearch(valor);
+                }
+            };
+
+            const handleFiltro = (tipo) => {
+                if (onFilter) {
+                    onFilter(tipo);
+                }
+            };
+
             return (
-                /* Pedro Guedes */
-                <aside></aside>
+                <aside className="barra-filtros">
+                    <h3 className="titulo-filtros">Filtros do Ranking</h3>
+
+                    {/* Campo de busca por nome ou ID */}
+                    <div className="campo-busca">
+                        <label htmlFor="busca-jogador">Buscar jogador</label>
+                        <input
+                            id="busca-jogador"
+                            type="text"
+                            placeholder="Nome ou ID..."
+                            value={termoBusca}
+                            onChange={handleBusca}
+                            className="input-busca"
+                        />
+                    </div>
+
+                    {/* Botões de filtro */}
+                    <div className="grupo-botoes-filtro">
+                        <p className="subtitulo-filtro">Ordenar por</p>
+
+                        <button
+                            type="button"
+                            className={`btn-filtro ${filtroAtivo === "fitas" ? "ativo" : ""}`}
+                            onClick={() => handleFiltro("fitas")}
+                        >
+                            🎞 Mais Fitas
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`btn-filtro ${filtroAtivo === "tempo" ? "ativo" : ""}`}
+                            onClick={() => handleFiltro("tempo")}
+                        >
+                            ⏱ Menor Tempo
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`btn-filtro ${filtroAtivo === "cartas" ? "ativo" : ""}`}
+                            onClick={() => handleFiltro("cartas")}
+                        >
+                            ✉ Mais Cartas
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`btn-filtro ${filtroAtivo === "ouro" ? "ativo" : ""}`}
+                            onClick={() => handleFiltro("ouro")}
+                        >
+                            ✦ Mais Fitas de Ouro
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`btn-filtro btn-reset ${filtroAtivo === "padrao" ? "ativo" : ""}`}
+                            onClick={() => handleFiltro("padrao")}
+                        >
+                            ↺ Ordem Padrão
+                        </button>
+                    </div>
+                </aside>
             );
         }
+
 
         // ==========================================
         // COMPONENTE: ContadorColecionaveis
