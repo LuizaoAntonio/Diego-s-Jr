@@ -196,19 +196,20 @@
         // ==========================================
         // COMPONENTE: LinhaJogador
         // RESPONSÁVEL: Matheus
-        // TODO: Receber props do jogador e renderizar a linha da lista
         // ==========================================
         function LinhaJogador({ jogador }) {
-            // Matheus: use as props abaixo para montar a linha
-            // jogador.posicao, jogador.nome, jogador.fitas, etc.
             if (!jogador) return null;
 
             return (
-                /* Matheus — substitua este placeholder pela linha completa */
-                <div className="linha-jogador-placeholder">
-                    <span>{jogador.posicao}º</span>
-                    <span>{jogador.nome}</span>
-                    <span>🎞 {jogador.fitas}</span>
+                <div className="linha-jogador">
+                    <span className="posicao">{jogador.posicao}º</span>
+                    <span className="nome">{jogador.nome}</span>
+                        <div className="stats">
+                            <span>🎞 {jogador.fitas}</span>
+                            <span className="ouro">✦ {jogador.fitasOuro}</span>
+                            <span>✉ {jogador.cartas}</span>   
+                        </div>
+                    <span className="tempo">⏱ {jogador.tempo}</span>
                 </div>
             );
         }
@@ -332,18 +333,9 @@
                                     />
 
                                     <section className="lista-ranking">
-                                        <h3 className="titulo-lista">Lista Completa</h3>
-                                        {/* Contador — Luiz (opcional, pode ficar acima da lista) */}
-                                        <ContadorColecionaveis />
-
-                                        {/* Lista de jogadores — Matheus */}
-                                        {listaFiltrada.length === 0 ? (
-                                            <p className="sem-resultados">Nenhum jogador encontrado.</p>
-                                        ) : (
-                                            listaFiltrada.map((jogador) => (
-                                                <LinhaJogador key={jogador.id} jogador={jogador} />
-                                            ))
-                                        )}
+                                        {rankingJogadores.map((jogador) => (
+                                            <LinhaJogador key={jogador.id || jogador.posicao} jogador={jogador} />
+                                        ))}
                                     </section>
                                 </div>
                             </>
