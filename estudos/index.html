@@ -21,11 +21,11 @@
         // DADOS DE FALLBACK (caso a API falhe)
         // ==========================================
         const rankingFallback = [
-            { id: 1, posicao: 1, nome: "Laura80s", fitas: 7, fitasOuro: 2, cartas: 20, tempo: "1h 15m" },
-            { id: 2, posicao: 2, nome: "DiegoJr", fitas: 5, fitasOuro: 1, cartas: 14, tempo: "2h 05m" },
-            { id: 3, posicao: 3, nome: "Noxafuyf", fitas: 4, fitasOuro: 0, cartas: 10, tempo: "1h 45m" },
-            { id: 4, posicao: 4, nome: "Rafakvv", fitas: 3, fitasOuro: 1, cartas: 8, tempo: "58m" },
-            { id: 5, posicao: 5, nome: "YunoYuzuki", fitas: 2, fitasOuro: 0, cartas: 5, tempo: "32m" }
+            { id: 1, posicao: 1, nome: "YunoYuzuki", fitas: 7, fitasOuro: 2, cartas: 16, tempo: "15m", tag: "0073" },
+            { id: 2, posicao: 2, nome: "Rafakvv", fitas: 7, fitasOuro: 2, cartas: 15, tempo: "38m", tag: "9964" },
+            { id: 3, posicao: 3, nome: "murilojurema", fitas: 6, fitasOuro: 1, cartas: 13, tempo: "1h 25m", tag: "5570" },
+            { id: 4, posicao: 4, nome: "eu_manyu", fitas: 2, fitasOuro: 0, cartas: 5, tempo: "14m", tag: "9973" },
+            { id: 5, posicao: 5, nome: "pirilampo", fitas: 2, fitasOuro: 0, cartas: 5, tempo: "23m", tag: "5117" }
         ];
 
         // ==========================================
@@ -52,13 +52,12 @@
         }
 
         // ==========================================
-        // MEU COMPONENTE: PodioRanking
+        // COMPONENTE: PodioRanking
         // RESPONSÁVEL: Tadeu
         // ==========================================
         function PodioRanking({ jogadores }) {
             if (!jogadores || jogadores.length === 0) return null;
 
-            // Garante top 3 ordenado
             const top3 = [...jogadores]
                 .filter(j => j.posicao <= 3)
                 .sort((a, b) => a.posicao - b.posicao);
@@ -86,6 +85,7 @@
                                     {player.nome.charAt(0).toUpperCase()}
                                 </div>
                                 <h3 className="nome-player">{player.nome}</h3>
+                                {player.tag && <p className="tag-player">#{player.tag}</p>}
                                 <div className="stats-player">
                                     <span title="Fitas">🎞 {player.fitas}</span>
                                     <span className="ouro" title="Fitas de Ouro">✦ {player.fitasOuro}</span>
@@ -182,13 +182,41 @@
         // ==========================================
         // COMPONENTE: ContadorColecionaveis
         // RESPONSÁVEL: Luiz
-        // TODO: Implementar contador de fitas/cartas do usuário logado
         // ==========================================
         function ContadorColecionaveis() {
+            // Dados de exemplo (substitua pelos dados do usuário logado)
+            const stats = {
+                fitas: 0,
+                fitasOuro: 0,
+                cartas: 0,
+                tempo: "0m"
+            };
+
             return (
-                /* Luiz — coloque aqui o seu componente de contador */
-                <div className="contador-placeholder">
-                    <p>Contador de Colecionáveis (Luiz)</p>
+                <div className="contador-colecionaveis">
+                    <h3 className="titulo-contador">Seu Progresso</h3>
+                    <div className="contador-grid">
+                        <div className="contador-item">
+                            <span className="contador-icone">🎞</span>
+                            <span className="contador-valor">{stats.fitas}</span>
+                            <span className="contador-label">Fitas</span>
+                        </div>
+                        <div className="contador-item">
+                            <span className="contador-icone ouro">✦</span>
+                            <span className="contador-valor">{stats.fitasOuro}</span>
+                            <span className="contador-label">Ouro</span>
+                        </div>
+                        <div className="contador-item">
+                            <span className="contador-icone">✉</span>
+                            <span className="contador-valor">{stats.cartas}</span>
+                            <span className="contador-label">Cartas</span>
+                        </div>
+                        <div className="contador-item">
+                            <span className="contador-icone">⏱</span>
+                            <span className="contador-valor">{stats.tempo}</span>
+                            <span className="contador-label">Tempo</span>
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -203,12 +231,15 @@
             return (
                 <div className="linha-jogador">
                     <span className="posicao">{jogador.posicao}º</span>
-                    <span className="nome">{jogador.nome}</span>
-                        <div className="stats">
-                            <span>🎞 {jogador.fitas}</span>
-                            <span className="ouro">✦ {jogador.fitasOuro}</span>
-                            <span>✉ {jogador.cartas}</span>   
-                        </div>
+                    <div className="info-jogador">
+                        <span className="nome">{jogador.nome}</span>
+                        {jogador.tag && <span className="tag">#{jogador.tag}</span>}
+                    </div>
+                    <div className="stats">
+                        <span title="Fitas">🎞 {jogador.fitas}</span>
+                        <span className="ouro" title="Fitas de Ouro">✦ {jogador.fitasOuro}</span>
+                        <span title="Cartas">✉ {jogador.cartas}</span>
+                    </div>
                     <span className="tempo">⏱ {jogador.tempo}</span>
                 </div>
             );
@@ -217,19 +248,22 @@
         // ==========================================
         // COMPONENTE: RodapeLimbo
         // RESPONSÁVEL: Pedro Cassiano
-        // TODO: Footer com créditos e links
         // ==========================================
         function RodapeLimbo() {
             return (
-                /* Pedro Cassiano — implemente o rodapé aqui */
                 <footer className="rodape">
                     <p>Limbo of Memories · Ranking · Feito com 💜 pela equipe</p>
+                    <div className="rodape-links">
+                        <a href="https://limboofmemories.netlify.app/" target="_blank" rel="noopener noreferrer">Site Oficial</a>
+                        <span>·</span>
+                        <a href="https://yunoyuzuki.itch.io/limbo-of-memories" target="_blank" rel="noopener noreferrer">Baixar no itch.io</a>
+                    </div>
                 </footer>
             );
         }
 
         // ==========================================
-        // TELA PRINCIPAL (JUNÇÃO DOS COMPONENTES)
+        // TELA PRINCIPAL
         // ==========================================
         function App() {
             const [rankingJogadores, setRankingJogadores] = React.useState([]);
@@ -239,17 +273,15 @@
             const [termoBusca, setTermoBusca] = React.useState("");
 
             React.useEffect(() => {
-                fetch("https://limboofmemories.netlify.app/api")
+                fetch("https://limboofmemories.netlify.app/api/ranking")
                     .then((resposta) => {
                         if (!resposta.ok) throw new Error("Erro ao carregar ranking");
                         return resposta.json();
                     })
                     .then((dados) => {
-                        // Mapeia os dados reais da API
                         const mapeado = Array.isArray(dados)
                             ? dados.map((item, index) => {
-                                // Formata o tempo de segundos para "Xh Ym"
-                                const segundos = item.playtime_seconds || 0;
+                                const segundos = item.playtime_seconds || item.tempo_segundos || 0;
                                 const horas = Math.floor(segundos / 3600);
                                 const minutos = Math.floor((segundos % 3600) / 60);
                                 const tempoFormatado = horas > 0
@@ -258,12 +290,13 @@
 
                                 return {
                                     id: item.id || index + 1,
-                                    posicao: index + 1, // a API já vem ordenada
-                                    nome: item.username || item.nickname || "Jogador",
-                                    fitas: item.fitas_normais || 0,
-                                    fitasOuro: item.fitas_douradas || 0,
+                                    posicao: index + 1,
+                                    nome: item.username || item.nickname || item.nome || "Jogador",
+                                    fitas: item.fitas_normais || item.fitas || 0,
+                                    fitasOuro: item.fitas_douradas || item.fitasOuro || 0,
                                     cartas: item.cartas || 0,
-                                    tempo: tempoFormatado
+                                    tempo: tempoFormatado,
+                                    tag: item.player_tag || item.tag || null
                                 };
                             })
                             : rankingFallback;
@@ -279,33 +312,36 @@
                     });
             }, []);
 
-            // Filtra e ordena a lista (usado futuramente pela LinhaJogador)
+            // Filtra e ordena a lista
             const listaFiltrada = React.useMemo(() => {
                 let lista = [...rankingJogadores];
 
-                // Busca por nome
                 if (termoBusca.trim()) {
                     const termo = termoBusca.toLowerCase();
                     lista = lista.filter(j =>
                         j.nome.toLowerCase().includes(termo) ||
-                        String(j.id).includes(termo)
+                        String(j.id).includes(termo) ||
+                        (j.tag && j.tag.toLowerCase().includes(termo))
                     );
                 }
 
-                // Ordenação
                 if (filtroAtivo === "fitas") {
-                    lista.sort((a, b) => b.fitas - a.fitas);
+                    lista.sort((a, b) => b.fitas - a.fitas || b.fitasOuro - a.fitasOuro);
                 } else if (filtroAtivo === "cartas") {
                     lista.sort((a, b) => b.cartas - a.cartas);
                 } else if (filtroAtivo === "ouro") {
-                    lista.sort((a, b) => b.fitasOuro - a.fitasOuro);
+                    lista.sort((a, b) => b.fitasOuro - a.fitasOuro || b.fitas - a.fitas);
                 } else if (filtroAtivo === "tempo") {
-                    // Ordena do menor para o maior tempo (simplificado)
-                    lista.sort((a, b) => a.tempo.localeCompare(b.tempo));
+                    const paraMinutos = (t) => {
+                        if (!t) return 9999;
+                        const h = t.match(/(\d+)h/);
+                        const m = t.match(/(\d+)m/);
+                        return (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
+                    };
+                    lista.sort((a, b) => paraMinutos(a.tempo) - paraMinutos(b.tempo));
                 }
-                // "padrao" mantém a ordem original (já vem ordenada da API)
 
-                return lista;
+                return lista.map((j, i) => ({ ...j, posicao: i + 1 }));
             }, [rankingJogadores, filtroAtivo, termoBusca]);
 
             return (
@@ -321,11 +357,11 @@
                             <>
                                 {erro && <p className="aviso-erro">{erro}</p>}
 
-                                {/* Pódio — Tadeu */}
+                                <ContadorColecionaveis />
+
                                 <PodioRanking jogadores={rankingJogadores} />
 
                                 <div className="conteudo-flex">
-                                    {/* Filtros — Pedro Guedes */}
                                     <BarraLateralFiltros
                                         onSearch={setTermoBusca}
                                         onFilter={setFiltroAtivo}
@@ -333,9 +369,18 @@
                                     />
 
                                     <section className="lista-ranking">
-                                        {rankingJogadores.map((jogador) => (
-                                            <LinhaJogador key={jogador.id || jogador.posicao} jogador={jogador} />
-                                        ))}
+                                        <h3 className="titulo-lista">
+                                            Ranking Completo
+                                            <span className="total-jogadores"> ({listaFiltrada.length})</span>
+                                        </h3>
+
+                                        {listaFiltrada.length === 0 ? (
+                                            <p className="sem-resultados">Nenhum jogador encontrado.</p>
+                                        ) : (
+                                            listaFiltrada.map((jogador) => (
+                                                <LinhaJogador key={jogador.id || jogador.posicao} jogador={jogador} />
+                                            ))
+                                        )}
                                     </section>
                                 </div>
                             </>
