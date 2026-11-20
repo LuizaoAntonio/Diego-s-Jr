@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 04 — Meu primeiro componente</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function Cabecalho() {
+      return (
+        <header>
+          <h1>Projeto da Squad</h1>
+          <p>Organizando informações de forma simples.</p>
+        </header>
+      );
+    }
+
+    function Cartao() {
+      return (
+        <article>
+          <h2>Título do item</h2>
+          <p>Descrição curta do item.</p>
+        </article>
+      );
+    }
+
+    function Lista() {
+      const tarefas = [
+        { id: 1, texto: "Estudar React" },
+        { id: 2, texto: "Levar o cachorro" }
+      ];
+
+      return (
+        <section>
+          <h2>Tarefas</h2>
+          <ul>
+            {tarefas.map((tarefa) => (
+              <li key={tarefa.id}>{tarefa.texto}</li>
+            ))}
+          </ul>
+        </section>
+      );
+    }
+
+    function App() {
+      return (
+        <main>
+          <Cabecalho />
+          <section aria-label="Cartões">
+            <Cartao />
+            <Cartao />
+            <Cartao />
+          </section>
+          <Lista />
+        </main>
+      );
+    }
+
+    const raiz = ReactDOM.createRoot(document.getElementById("root"));
+    raiz.render(<App />);
+  </script>
+</body>
+</html>
