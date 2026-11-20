@@ -275,13 +275,63 @@ Jogo de terror psicológico em primeira pessoa, com estética PS1/low-poly, dese
 > Anteriormente *Lost Memories* / *Lost Memories: Laura*.
 
 **Estúdio:** Lunar Black Cat Studios
-**Equipe de desenvolvimento:** Team Static Noise
+**Equipe de desenvolvimento:** Diego's Jr
 
 A casa da protagonista representa suas memórias de infância. O foco temático do jogo está em culpa, luto, aceitação e traumas.
 
 - **Gênero:** terror psicológico, exploração em primeira pessoa
 - **Motor:** Godot Engine 3.6 (scripts em português)
 - **Restrição de escopo:** não haverá modelos de personagens complexos, por questão de orçamento
+
+---
+
+## Progresso
+
+`░░░░░░░░░░░░░░░░░░░░` **0%**, 0 de 21 issues concluídas
+
+| Fase | Foco | Progresso |
+|---|---|---|
+| 1 | A main abre e roda | 0% (0/5) |
+| 2 | Bugs que os jogadores acharam | 35% (0/3) |
+| 3 | Conta e login dentro do jogo | 95% (2/2) |
+| 4 | API, segurança e contrato | 90% (4/5) |
+| 5 | Peso do repositório | 10% (0/3) |
+
+As fases estão em ordem de prioridade, não de gosto. A **Fase 1** vem primeiro porque
+um clone que não abre trava todo mundo, e a **Fase 6** vem por último porque não adianta
+tela bonita em jogo que não roda.
+
+> Progresso ao vivo nos [Milestones](https://github.com/YunoYuzuki/Diego-s-Jr/milestones)
+> do GitHub, onde o percentual atualiza sozinho quando a issue fecha. A tabela acima é um
+> retrato, atualizado de tempos em tempos.
+
+### Como pegar uma tarefa
+
+**Comece pela issue [#21, "Deixar o projeto rodando na sua máquina"](https://github.com/YunoYuzuki/Diego-s-Jr/issues/21).**
+Ela é a primeira de todas e é a única que várias pessoas fazem ao mesmo tempo sem conflito,
+porque a entrega não é um Pull Request, é um comentário com print. Com o jogo rodando:
+
+1. Abra as [issues abertas](https://github.com/YunoYuzuki/Diego-s-Jr/issues) e escolha uma.
+2. Comente **"pego essa"**. A partir daí ela é sua, ninguém mexe.
+3. Leia o [CONTRIBUTING.md](CONTRIBUTING.md) antes do primeiro commit. Ele tem o passo a
+   passo de branch, commit e PR, e a lista do que nunca entra no repositório.
+
+Ninguém distribui tarefa aqui. As issues ficam abertas e cada um pega a sua.
+
+Quem está começando, procure as marcadas **`good first issue`**: são as que dão pra
+resolver sem conhecer o projeto inteiro. Hoje são cinco.
+
+E as marcadas **`bloqueante`** são as que travam o trabalho dos outros. Se você tem tempo
+sobrando e não sabe o que pegar, pegue uma dessas.
+
+### Design das telas (Figma)
+
+Protótipo das telas propostas:
+https://www.figma.com/design/WYbslK8CSUTeexhEp1bGUC/limbo?m=auto&t=MRpFmaP4rdMulv39-6
+
+O que está lá é **proposta, não ordem**. Dá pra seguir como está, e dá pra fazer diferente:
+**é só pedir permissão antes** e combinar no canal. O que não pode é cada tela seguir uma
+direção e o jogo virar colcha de retalhos na frente do avaliador.
 
 ---
 
@@ -336,7 +386,7 @@ Laura revive, em uma versão em limbo de sua casa de infância, memórias marcan
 - Coleta de fitas cassete que contam a história
 - Leitura de cartas e bilhetes espalhados pela casa
 - A casa muda conforme o jogador progride
-- Inventário desliza pela direita (`Tab`); `Shift+Tab` mostra descrições dos itens
+- Inventário desliza pela direita (`Tab`)
 
 ---
 
@@ -396,10 +446,7 @@ O quarto de Laura começa praticamente vazio. Conforme itens importantes são en
 
 ## Puzzles
 
-- Cartas
-- Documentos
-- Objetos escondidos
-- Cifra de César, cadeados numéricos, desenhos de infância como chave de cifra
+- A fazer
 
 Puzzles simples, para não quebrar o ritmo da história.
 
@@ -528,5 +575,3 @@ Queremos que os jogadores sintam a história e entendam como Laura lidou com a s
 https://github.com/user-attachments/assets/333666da-f511-48ba-9b61-aa1af3ba92c4
 
 
-
-*Lost Memories — GDD v1.0 | Documento sujeito a alterações conforme o desenvolvimento do projeto.*

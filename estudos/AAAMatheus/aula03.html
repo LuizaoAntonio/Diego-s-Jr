@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+            let tarefas = [
+                { id: 1, texto: "Estudar React", feita: false },
+                { id: 2, texto: "Levar Cachorro", feita: true }
+            ];
+
+            function desenhar() {
+                const ul = document.getElementById("lista");
+                ul.innerHTML = ""; 
+
+                for (const t of tarefas) {
+                    const li = document.createElement("li");
+                    li.textContent = t.texto + (t.feita ? " (feita)" : "");
+                    ul.appendChild(li);
+                }
+
+                document.getElementById("contador").textContent = tarefas.length + " tarefas";
+            }
+
+            document.getElementById("add").addEventListener("click", () => {
+                const input = document.getElementById("novo");
+                tarefas.push({ id: Date.now(), texto: input.value, feita: false});
+                input.value = "";
+                desenhar()
+            });
+            desenhar();
+
+            function ListaDeTarefas() {
+                const [tarefas, setTarefas] = useState([
+                    { id: 1, texto: "Estudar React", feita: false },
+                    { id: 2, texto: "Levar cachorro", feita: true },
+                ]);
+
+                return (
+                    <div>
+                        <p>{tarefas.length} tarefas</p>
+                        <ul>
+                            {tarefas.map((t) => (
+                                <li key={t.id}>{t.texto} {t.feita ? "(feita)" : ""}</li>
+                            ))}
+                            </ul>
+                        </div>
+                    );
+                }
+        </script>
+    <p id ="contador"></p>
+    <ul id="lista"></ul>
+    <input id="novo" placeholder="nova tarefa">
+    <button id="add">Adicionar</button>
+</body>
+</html>
