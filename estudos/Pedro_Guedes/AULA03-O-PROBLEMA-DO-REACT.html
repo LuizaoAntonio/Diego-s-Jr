@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 03 — O problema que o React resolve</title>
+</head>
+<body>
+  <main>
+    <h1>Lista de tarefas — JavaScript puro</h1>
+    <p id="contador"></p>
+    <p id="feitas"></p>
+    <p id="aviso" hidden>Nenhuma tarefa cadastrada.</p>
+    <ul id="lista"></ul>
+    <label for="novo">Nova tarefa</label>
+    <input id="novo" placeholder="Digite uma tarefa">
+    <button id="add" type="button">Adicionar</button>
+
+    <section>
+      <h2>Registro dos experimentos</h2>
+      <ol>
+        <li>
+          Sem chamar <code>desenhar()</code> depois do clique, o vetor recebe a tarefa,
+          mas a lista e o contador ficam desatualizados. Conferir o vetor no console prova
+          que o dado mudou.
+        </li>
+        <li>
+          O campo digitado dentro de um item desaparece ao adicionar outra tarefa,
+          porque <code>innerHTML = ""</code> remove a lista e seus campos antes de
+          desenhá-los de novo.
+        </li>
+        <li>
+          Para mostrar total, tarefas feitas e aviso de lista vazia, a função de desenho
+          precisa atualizar quatro partes: a lista, o contador, a contagem de feitas e o aviso.
+        </li>
+        <li>
+          Se o id da lista mudar apenas no HTML, <code>getElementById("lista")</code>
+          retorna <code>null</code>. O erro aparece no console quando o script tenta
+          acessar <code>innerHTML</code> durante o desenho inicial.
+        </li>
+      </ol>
+      <p>
+        O experimento mais incômodo é perder o que foi digitado: a tela apaga uma informação
+        do usuário mesmo que ela ainda não tenha sido salva.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    let tarefas = [
+      { id: 1, texto: "Estudar React", feita: false },
+      { id: 2, texto: "Levar o cachorro", feita: true }
+    ];
+
+    function desenhar() {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      for (const tarefa of tarefas) {
+        const li = document.createElement("li");
+        const texto = document.createElement("span");
+        const rascunho = document.createElement("input");
+
+        texto.textContent = tarefa.texto + (tarefa.feita ? " (feita)" : " (pendente)");
+        rascunho.type = "text";
+        rascunho.placeholder = "Anotação temporária";
+        rascunho.setAttribute("aria-label", "Anotação temporária para " + tarefa.texto);
+
+        li.append(texto, " ", rascunho);
+        ul.appendChild(li);
+      }
+
+      const quantidadeFeitas = tarefas.filter((tarefa) => tarefa.feita).length;
+      document.getElementById("contador").textContent =
+        tarefas.length + (tarefas.length === 1 ? " tarefa" : " tarefas");
+      document.getElementById("feitas").textContent =
+        quantidadeFeitas + (quantidadeFeitas === 1 ? " tarefa feita" : " tarefas feitas");
+      document.getElementById("aviso").hidden = tarefas.length !== 0;
+    }
+
+    document.getElementById("add").addEventListener("click", () => {
+      const input = document.getElementById("novo");
+      const texto = input.value.trim();
+
+      if (texto === "") {
+        input.focus();
+        return;
+      }
+
+      tarefas.push({ id: Date.now(), texto, feita: false });
+      input.value = "";
+      desenhar();
+      input.focus();
+    });
+
+    document.getElementById("novo").addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter") {
+        document.getElementById("add").click();
+      }
+    });
+
+    desenhar();
+  </script>
+</body>
+</html>
