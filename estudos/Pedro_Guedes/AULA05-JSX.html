@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 05 — JSX de verdade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem auto;
+      max-width: 48rem;
+      padding: 0 1rem;
+    }
+
+    .destaque {
+      background-color: #e8f1ff;
+      border-left: 4px solid #2457a7;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const projeto = "Projeto da Squad";
+
+    function Cabecalho() {
+      return (
+        <header>
+          <h1>{projeto}</h1>
+          <p>Organizando informações de forma simples.</p>
+        </header>
+      );
+    }
+
+    function Cartao() {
+      return (
+        <article className="destaque">
+          <h2>Organização</h2>
+          <p>As informações ficam reunidas em um só lugar.</p>
+        </article>
+      );
+    }
+
+    function Lista() {
+      const tarefas = [
+        { id: 1, texto: "Estudar React", feita: false },
+        { id: 2, texto: "Levar o cachorro", feita: true }
+      ];
+
+      return (
+        <section>
+          <h2>Tarefas</h2>
+          <ul>
+            {tarefas.map((tarefa) => (
+              <li key={tarefa.id}>
+                {tarefa.texto} {tarefa.feita ? "(feita)" : "(pendente)"}
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    }
+
+    function ExemploComDiv() {
+      return (
+        <div>
+          <p>Primeiro elemento agrupado com div.</p>
+          <p>Segundo elemento agrupado com div.</p>
+        </div>
+      );
+    }
+
+    function ExemploComFragment() {
+      return (
+        <>
+          <p>Primeiro elemento agrupado com Fragment.</p>
+          <p>Segundo elemento agrupado com Fragment.</p>
+        </>
+      );
+    }
+
+    function App() {
+      return (
+        <main>
+          <Cabecalho />
+          <Cartao />
+          <Lista />
+          <section aria-label="Comparação de agrupamento">
+            <h2>Agrupamento com div e Fragment</h2>
+            <ExemploComDiv />
+            <ExemploComFragment />
+          </section>
+          <section>
+            <h2>Registro dos experimentos</h2>
+            <ul>
+              <li><code>class</code> causa aviso; em JSX, a propriedade correta é <code>className</code>.</li>
+              <li>Dois elementos soltos no retorno causam erro de elementos JSX adjacentes; um <code>div</code> ou Fragment os agrupa.</li>
+              <li>Uma imagem sem fechamento causa erro de sintaxe; a forma JSX é <code>&lt;img alt="Exemplo" /&gt;</code>.</li>
+              <li>Um <code>if</code> dentro das chaves causa erro porque chaves recebem expressões, não comandos; o ternário resolve a condição.</li>
+              <li>A <code>div</code> cria um elemento no HTML gerado; o Fragment agrupa os filhos sem acrescentar elemento.</li>
+            </ul>
+          </section>
+        </main>
+      );
+    }
+
+    const raiz = ReactDOM.createRoot(document.getElementById("root"));
+    raiz.render(<App />);
+  </script>
+</body>
+</html>
